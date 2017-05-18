@@ -103,7 +103,7 @@ def decompose(poly_points):
                             ints[(c,d)].append( x )
 
     # add self-intersection points to poly
-    for k, v in ints.items():
+    for k, v in ints.iteritems():
             inorder_extend(pts, k[0], k[1], v)
 
     # build a list of loops
@@ -121,7 +121,7 @@ def decompose(poly_points):
             pt = next(pts, None)
     seg = nextisec(pts)
     while seg:
-        print("seg",seg)
+        print "seg",seg
         for i,pend in enumerate(pending):
             # test adding on previous
             #print "pend",pend
@@ -152,7 +152,7 @@ def decompose(poly_points):
 
 crazypoly = [Point(randrange(500),randrange(500)) for _ in range(100)]
 decomp = decompose(crazypoly)
-print(len(crazypoly), len(decomp))
+print len(crazypoly), len(decomp)
 
 import pyagg
 cnv = pyagg.Canvas(500,500)
@@ -163,7 +163,7 @@ cnv = pyagg.Canvas(500,500)
 ##    cnv.draw_circle(pt, fillsize=2)
     
 for p in decomp:
-    print(p)
+    print p
     cnv.draw_polygon(p, fillcolor=(randrange(222),randrange(222),randrange(222),211))
 
 cnv.view()
