@@ -7,7 +7,7 @@ from pydraw.geomhelper import _Line
 def _pairwise(iterable):
     a,b = itertools.tee(iterable)
     next(b, None)
-    return zip(a,b)
+    return itertools.izip(a,b)
 
 def _signed_area(coords):
     """
@@ -16,10 +16,10 @@ def _signed_area(coords):
     algorithm at http://www.cgafaq.info/wiki/Polygon_Area. A value >= 0
     indicates a counter-clockwise oriented ring.
     """
-    xs, ys = list(map(list, list(zip(*coords))))
+    xs, ys = map(list, zip(*coords))
     xs.append(xs[1])
     ys.append(ys[1])
-    return sum(xs[i]*(ys[i+1]-ys[i-1]) for i in range(1, len(coords)))/2.0
+    return sum(xs[i]*(ys[i+1]-ys[i-1]) for i in xrange(1, len(coords)))/2.0
 
 def _remove_selfintersections(coords):
     #1 insert all selfintersection points
@@ -67,7 +67,7 @@ def bufferpolygon(poly, buffersize, jointype="miter"):
                 intersection = bufferline1.intersect(bufferline2, infinite=True)
                 if not intersection: continue  # ???
                 else: connection = [intersection]
-                print(connection)
+                print connection
                 previntersection = intersection
             elif jointype == "bevel":
                 connection = bufferline2.tolist()
